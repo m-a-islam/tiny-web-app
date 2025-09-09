@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Maatwebsite\Excel\Facades\Excel;
 
-class SampleController extends Controller
+class FileUploadController extends Controller
 {
     public function index(): Factory|View
     {
@@ -40,7 +40,7 @@ class SampleController extends Controller
             $sheetData = $data[0];
 
             $header = array_shift($sheetData); // Removes and returns the first element (header)
-
+            $header = array_map('trim', $header);
             foreach ($sheetData as $row) {
                 $rowData = array_combine($header, $row);
 
