@@ -1,5 +1,5 @@
 # Start from the official PHP 8.1 FPM image.
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Set the working directory inside the container.
 WORKDIR /var/www
@@ -17,6 +17,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_sqlite gd bcmath \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set ownership and permissions for the web root directory.
 RUN chown -R www-data:www-data /var/www
