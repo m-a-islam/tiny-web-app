@@ -2,56 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSpreadsheetRequest;
 use App\Models\Sample;
+use App\Services\SpreadsheetImportService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Maatwebsite\Excel\Facades\Excel;
 
 class FileUploadController extends Controller
 {
+    public const RECS_PER_PAGE = 5;
+
     public function index(): Factory|View
     {
-        $samples = Sample::paginate(5);
+        $samples = Sample::paginate(self::RECS_PER_PAGE);
         return view('upload', ['samples' => $samples]);
     }
-    public function upload(Request $request): Redirector|RedirectResponse
-    {
 
-        $request->validate([
-            'spreadsheet' => 'required|file|mimes:xlsx,xls,csv,txt'
-        ]);
-        $projectName = config('app.name');
+
+    /**
+     * Handle the file upload and store the data in the database.
+     *
+     * @param StoreSpreadsheetRequest $request
+     * @param SpreadsheetImportService $importer
+     * @return Redirector|RedirectResponse
+     */
+    public function upload(StoreSpreadsheetRequest $request, SpreadsheetImportService $importer): Redirector|RedirectResponse
+    {
         $file = $request->file('spreadsheet');
 
-        $timestamp = now()->format('Y-m-d_H-i-s');
+        $importer->import($file);
 
-        $extension = $file->getClientOriginalExtension();
-
-        $newFilename = "{$projectName}_{$timestamp}.{$extension}";
-
-        $path = $file->storeAs('uploads', $newFilename);
-        $data = Excel::toArray((object)[], $file);
-
-
-        if (!empty($data) && count($data[0]) > 1) {
-            $sheetData = $data[0];
-
-            $header = array_shift($sheetData);
-            $header = array_map('trim', $header);
-            foreach ($sheetData as $row) {
-                $rowData = array_combine($header, $row);
-
-                Sample::create([
-                    'name' => $rowData['name'],
-                    'type' => $rowData['type'],
-                    'location' => $rowData['location']
-                ]);
-            }
-        }
         return redirect('/')->with('success', 'File uploaded and data imported successfully!');
     }
+
 
 }
