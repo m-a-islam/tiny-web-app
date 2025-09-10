@@ -5,6 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileDisplayArea = document.getElementById('file-display-area');
     const fileNameDisplay = document.getElementById('file-name-display');
 
+
+    const MAX_SIZE_MB = 10;
+    const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
+    function handleFile(file) {
+        if (!file) return;
+
+        if (file.size > MAX_SIZE_BYTES) {
+            alert(`Error: File size cannot exceed ${MAX_SIZE_MB}MB.`);
+            fileInput.value = '';
+            fileNameDisplay.textContent = 'No file selected';
+            return;
+        }
+
+
+        fileNameDisplay.textContent = file.name;
+    }
+
+
     if (fileDisplayArea) {
         fileDisplayArea.addEventListener('click', () => {
             fileInput.click();
@@ -12,34 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (fileInput) {
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                fileNameDisplay.textContent = fileInput.files[0].name;
-            } else {
-                fileNameDisplay.textContent = 'No file selected';
-            }
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            handleFile(file);
         });
     }
 
     let dragCounter = 0;
-
-    window.addEventListener('dragenter', (e) => {
-        e.preventDefault();
-        dragCounter++;
-        overlay.style.display = 'flex';
-    });
-
-    window.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-
-    window.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        dragCounter--;
-        if (dragCounter === 0) {
-            overlay.style.display = 'none';
-        }
-    });
+    window.addEventListener('dragenter', (e) => { e.preventDefault(); dragCounter++; overlay.style.display = 'flex'; });
+    window.addEventListener('dragover', (e) => { e.preventDefault(); });
+    window.addEventListener('dragleave', (e) => { e.preventDefault(); dragCounter--; if (dragCounter === 0) { overlay.style.display = 'none'; }});
 
     window.addEventListener('drop', (e) => {
         e.preventDefault();
@@ -47,11 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.style.display = 'none';
 
         const droppedFiles = e.dataTransfer.files;
-
         if (droppedFiles.length > 0) {
             fileInput.files = droppedFiles;
-            fileNameDisplay.textContent = droppedFiles[0].name;
-            // form.submit();
+            handleFile(droppedFiles[0]);
         }
     });
 });

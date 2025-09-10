@@ -23,7 +23,12 @@ class StoreSpreadsheetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'spreadsheet' => 'required|file|mimes:xlsx,xls,csv,txt'
+            'spreadsheet' => [
+                'required',
+                'file',
+                'mimes:xlsx,xls,csv,txt',
+                'max:10240'
+            ]
         ];
     }
 }

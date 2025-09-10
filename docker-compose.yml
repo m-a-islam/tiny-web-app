@@ -9,6 +9,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./src:/var/www
+      - ./docker/custom.ini:/usr/local/etc/php/conf.d/custom.ini
     networks:
       - app-network
 
