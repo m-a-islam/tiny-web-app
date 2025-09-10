@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
             fileNameDisplay.textContent = 'No file selected';
             return;
         }
-
-
         fileNameDisplay.textContent = file.name;
     }
 
