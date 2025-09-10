@@ -23,7 +23,7 @@ class FileUploadController extends Controller
         $request->validate([
             'spreadsheet' => 'required|file|mimes:xlsx,xls,csv,txt'
         ]);
-        $projectName = 'tiny-web-app';
+        $projectName = config('app.name');
         $file = $request->file('spreadsheet');
 
         $timestamp = now()->format('Y-m-d_H-i-s');
@@ -39,7 +39,7 @@ class FileUploadController extends Controller
         if (!empty($data) && count($data[0]) > 1) {
             $sheetData = $data[0];
 
-            $header = array_shift($sheetData); // Removes and returns the first element (header)
+            $header = array_shift($sheetData);
             $header = array_map('trim', $header);
             foreach ($sheetData as $row) {
                 $rowData = array_combine($header, $row);
