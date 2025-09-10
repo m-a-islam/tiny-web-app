@@ -23,3 +23,11 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN chown -R www-data:www-data /var/www
+
+COPY ./docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+# 2. Make the script executable
+RUN chmod +x /usr/local/bin/entrypoint.sh
+# 3. Set the entrypoint
+ENTRYPOINT ["entrypoint.sh"]
+# 4. Set the default command that the entrypoint will execute
+CMD ["php-fpm"]

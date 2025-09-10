@@ -37,7 +37,9 @@ Please follow these steps exactly to get the application running.
 
 **1. Clone the Repository**
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/m-a-islam/tiny-web-app.git
+or
+git clone git@github.com:m-a-islam/tiny-web-app.git
 cd tiny-web-app 
 ```
 
@@ -55,6 +57,7 @@ docker-compose up -d --build
 **4. Generate the Application Key**
 Laravel requires an application key for encryption.
 ```bash
+composer install
 docker-compose exec app php artisan key:generate
 ```
 **5. Run Database Migrations**
