@@ -22,7 +22,7 @@ class FileUploadController extends Controller
             $recsPerPage = $allowedPerPage[0];
         }
 
-        $samples = Sample::paginate($recsPerPage);
+        $samples = Sample::latest()->paginate($recsPerPage);
 
         $samples->appends(['per_page' => $recsPerPage]);
         return view('upload', [
