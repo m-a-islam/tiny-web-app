@@ -49,8 +49,9 @@ class SpreadsheetImportService
     {
         $projectName = config('app.name', 'tiny-web-app');
         $timestamp = now()->format('Y-m-d_H-i-s');
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $extension = $file->getClientOriginalExtension();
-        $newFilename = "{$projectName}_{$timestamp}.{$extension}";
+        $newFilename = "{$projectName}_{$originalName}_{$timestamp}.{$extension}";
 
         return $file->storeAs('uploads', $newFilename);
     }

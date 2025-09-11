@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('drag-overlay');
     const fileDisplayArea = document.getElementById('file-display-area');
     const fileNameDisplay = document.getElementById('file-name-display');
+    const perPageSelect = document.getElementById('per_page');
+
 
 
     const MAX_SIZE_MB = 10;
@@ -32,6 +34,25 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             handleFile(file);
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', (event) => {
+            if (fileInput.files.length === 0) {
+                event.preventDefault();
+                alert('Please select a file to upload.');
+            }
+        });
+    }
+
+    if (perPageSelect) {
+        perPageSelect.addEventListener('change', () => {
+            const selectedValue = perPageSelect.value;
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('per_page', selectedValue);
+            currentUrl.searchParams.delete('page');
+            window.location.href = currentUrl.toString();
         });
     }
 

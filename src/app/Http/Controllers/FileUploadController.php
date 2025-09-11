@@ -8,16 +8,27 @@ use App\Services\SpreadsheetImportService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class FileUploadController extends Controller
 {
-    public const RECS_PER_PAGE = 5;
-
-    public function index(): Factory|View
+    public function index(Request $request): Factory|View
     {
-        $samples = Sample::paginate(self::RECS_PER_PAGE);
-        return view('upload', ['samples' => $samples]);
+        $allowedPerPage = [10, 25, 50, 100];
+
+        $recsPerPage = $request->query('per_page', $allowedPerPage[0]);
+        if (!in_array($recsPerPage, $allowedPerPage)) {
+            $recsPerPage = $allowedPerPage[0];
+        }
+
+        $samples = Sample::paginate($recsPerPage);
+
+        $samples->appends(['per_page' => $recsPerPage]);
+        return view('upload', [
+            'samples' => $samples,
+            'recsPerPage' => $recsPerPage
+        ]);
     }
 
 

@@ -39,7 +39,7 @@
             @csrf
             <div class="mb-4">
                 <label for="spreadsheet" class="block text-gray-700 text-sm font-bold mb-2">Drag a file anywhere or click to select:</label>
-                <input type="file" name="spreadsheet" id="spreadsheet" required class="hidden">
+                <input type="file" name="spreadsheet" id="spreadsheet" class="hidden">
                 <div id="file-display-area" class="mt-2 text-center border-2 border-dashed border-gray-300 p-6 rounded-lg cursor-pointer hover:bg-gray-50">
                     <span id="file-name-display" class="text-gray-500">No file selected</span>
                 </div>
@@ -54,6 +54,15 @@
 
     <div class="mt-12">
         <h2 class="text-2xl font-bold mb-4 text-center">Spreadsheet Content</h2>
+        <div class="max-w-4xl mx-auto mb-4 flex justify-end items-center">
+            <label for="per_page" class="text-sm text-gray-700 mr-2">Records per page:</label>
+            <select name="per_page" id="per_page" class="border-gray-300 rounded-md text-sm">
+                <option value="10" {{ $recsPerPage == 10 ? 'selected' : '' }}>10</option>
+                <option value="25" {{ $recsPerPage == 25 ? 'selected' : '' }}>25</option>
+                <option value="50" {{ $recsPerPage == 50 ? 'selected' : '' }}>50</option>
+                <option value="100" {{ $recsPerPage == 100 ? 'selected' : '' }}>100</option>
+            </select>
+        </div>
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md">
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500">
