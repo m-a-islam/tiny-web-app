@@ -1,8 +1,10 @@
 # Tiny Web App - Spreadsheet Uploader
 
-This is a simple web application built with the Laravel framework that fulfills the requirements of the Web Application Engineer technical task. The application allows a user to upload a spreadsheet file (XLSX or CSV), which is then parsed, stored in a SQLite database, and displayed back to the user with pagination.
+This is a simple web application built with the Laravel framework. The application allows a user to upload a spreadsheet file (XLSX or CSV), which is then parsed, stored in a SQLite database, and displayed back to the user with pagination.
 
 The entire development environment is containerized using Docker, making it fully portable and easy to run with a single command.
+
+## Running the Tiny Web App With Docker
 
 ## Features
 
@@ -37,37 +39,44 @@ Please follow these steps exactly to get the application running.
 
 **1. Clone the Repository**
 ```bash
-git clone https://github.com/m-a-islam/tiny-web-app.git
+    git clone https://github.com/m-a-islam/tiny-web-app.git
+```
 or
-git clone git@github.com:m-a-islam/tiny-web-app.git
-cd tiny-web-app 
+```bash
+    git clone git@github.com:m-a-islam/tiny-web-app.git
+```
+and then
+```bash
+    cd tiny-web-app 
 ```
 
 **2. Create the Environment File**
 Copy the example environment file. The application is already configured to use SQLite.
 ```bash
-cp src/.env.example src/.env
+    cp src/.env.example src/.env
 ```
 **3. Build and Start the Docker Containers**
 This command will build the custom PHP image and start the app and nginx services in the background.
 ```bash
-docker-compose up -d --build
+  docker-compose up -d --build
 ```
 
 **4. Generate the Application Key**
 Laravel requires an application key for encryption.
 ```bash
-composer install
-docker-compose exec app php artisan key:generate
+  composer install
+  docker-compose exec app php artisan key:generate
 ```
+
 **5. Run Database Migrations**
 This command will create the sample table in the SQLite database.
 ```bash
-docker-compose exec app php artisan migrate
+  docker-compose exec app php artisan migrate
 ```
 
 **6. You're All Set!**
 The application is now running and available at http://localhost:8080.
+
 ## How to Use the Application
 
 1.  **Open the Application:** Navigate to [http://localhost:8080](http://localhost:8080) in your web browser.
@@ -114,7 +123,7 @@ This project was built with a focus on clean, modern software architecture.
 -   **Containerized Development:** The entire environment is defined in `docker-compose.yml`. This guarantees a consistent and reproducible environment, solving the "it works on my machine" problem.
 
 -   **Separation of Concerns (SOLID Principles):**
-    -   **Thin Controllers:** The `SampleController`'s responsibility is limited to handling the HTTP request and response. All complex logic is delegated to other classes.
+    -   **Thin Controllers:** The `FileUploadController`'s responsibility is limited to handling the HTTP request and response. All complex logic is delegated to other classes.
     -   **Service Layer:** The core business logic for processing a spreadsheet is extracted into a dedicated `SpreadsheetImportService`. This makes the logic reusable, self-contained, and highly testable.
     -   **Form Request Class:** Validation logic is encapsulated in the `StoreSpreadsheetRequest` class, removing clutter from the controller and making the validation rules reusable.
 

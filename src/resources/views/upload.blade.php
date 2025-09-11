@@ -57,7 +57,7 @@
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md">
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <thead class="text-xs uppercase text-white bg-gradient-to-r from-violet-500 via-indigo-500 to-purple-600">
                     <tr>
                         <th scope="col" class="px-6 py-3">Name</th>
                         <th scope="col" class="px-6 py-3">Type</th>
@@ -66,11 +66,11 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                     @forelse ($samples as $sample)
-                        <tr class="bg-white hover:bg-gray-50">
+                        <tr class="odd:bg-white even:bg-gray-50 hover:bg-indigo-50 transition-colors">
 
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $sample->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $sample->type }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $sample->location }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $sample->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $sample->type }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $sample->location }}</td>
                         </tr>
                     @empty
                         <tr class="bg-white border-b">
