@@ -54,10 +54,6 @@ public function test_a_valid_spreadsheet_can_be_uploaded()
     ]);
 
     $this->assertDatabaseCount('sample', 2);
-
-    $files = Storage::disk('local')->files('uploads');
-    $this->assertCount(1, $files);
-    $this->assertStringContainsString('tiny-web-app', $files[0]);
     }
 
 

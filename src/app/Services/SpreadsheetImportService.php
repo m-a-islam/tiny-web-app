@@ -16,7 +16,6 @@ class SpreadsheetImportService
      */
     public function import(UploadedFile $file): void
     {
-        $this->storeFile($file);
 
         $data = Excel::toArray((object)[], $file);
 
@@ -25,11 +24,8 @@ class SpreadsheetImportService
             $header = array_map('trim', array_shift($sheetData));
 
             foreach ($sheetData as $row) {
-                // Skip empty rows
                 if (empty(implode('', $row))) continue;
-
                 $rowData = array_combine($header, $row);
-
                 Sample::create([
                     'name' => $rowData['name'] ?? null,
                     'type' => $rowData['type'] ?? null,
@@ -39,20 +35,5 @@ class SpreadsheetImportService
         }
     }
 
-    /**
-     * Store the file with a project-specific name.
-     *
-     * @param UploadedFile $file
-     * @return string The path where the file was stored.
-     */
-    protected function storeFile(UploadedFile $file): string
-    {
-        $projectName = config('app.name', 'tiny-web-app');
-        $timestamp = now()->format('Y-m-d_H-i-s');
-        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $extension = $file->getClientOriginalExtension();
-        $newFilename = "{$projectName}_{$originalName}_{$timestamp}.{$extension}";
 
-        return $file->storeAs('uploads', $newFilename);
-    }
 }

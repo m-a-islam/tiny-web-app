@@ -7,7 +7,6 @@
 -   **Modern UI:** A clean user interface with a global "drag-and-drop" area for a seamless user experience.
 -   **Data Persistence:** Uploaded data is parsed and stored in a local SQLite database.
 -   **Dynamic Data Display:** All data from the database is displayed in a paginated table.
--   **Custom File Naming:** Uploaded files are stored on the server path: `src\storage\app\private\uploads` with a custom name format (`project-name_original_file_name_date_time.extension`).
 -   **Robust Validation:**
     -   **Server-Side:** The application validates that a file is present, has a correct MIME type, and does not exceed a 10MB size limit.
     -   **Client-Side:** JavaScript provides immediate user feedback if the selected file is larger than 10MB, preventing a long upload that is destined to fail.
@@ -39,14 +38,16 @@ The test suite includes **Feature Tests** that simulate user interactions and **
 #### Feature Tests (`tests/Feature/`)
 
 -   **Main Page Loads:** Verifies that the home page returns a successful `200` HTTP status.
--   **Successful File Upload:** Tests the entire "best case" - a valid file is uploaded, data is stored in the database, the file is saved to disk, and the user is redirected.
+-   **Successful File Upload:** Tests the entire "best case" - a valid file is uploaded, data is parsed and stored in the database, and the user is redirected.
 -   **Validation: No File Provided:** Ensures the application returns a validation error if the form is submitted without a file.
 -   **Validation: Invalid File Type:** Ensures the application rejects files that are not spreadsheets (e.g., an image).
 -   **Validation: File Too Large:** Ensures the application correctly rejects a file that is larger than the 10MB limit.
 
 #### Unit Tests (`tests/Unit/`)
 
--   **SpreadsheetImportService:** This test verifies the core business logic of the application in isolation. It mocks the `Excel` facade and uses an in-memory database to confirm that the service correctly parses data and creates database records, proving the logic is sound independent of any controller or HTTP request.
+-   **SpreadsheetImportService:** This test verifies the core business logic of the application in isolation.
+It mocks the `Excel` facade and uses an in-memory database to confirm that the service correctly parses data
+and creates database records, proving the logic is sound independent of any controller or HTTP request.
 
 ## Architectural Decisions & Best Practices
 
@@ -56,9 +57,12 @@ This project was built with a focus on clean, modern software architecture.
 This guarantees a consistent and reproducible environment, solving the "it works on my machine" problem.  
 
 -   **Separation of Concerns (SOLID Principles):**
-    -   **Thin Controllers:** The `FileUploadController`'s responsibility is limited to handling the HTTP request and response. All complex logic is delegated to other classes.
-    -   **Service Layer:** The core business logic for processing a spreadsheet is extracted into a dedicated `SpreadsheetImportService`. This makes the logic reusable, self-contained, and highly testable.
-    -   **Form Request Class:** Validation logic is encapsulated in the `StoreSpreadsheetRequest` class, removing clutter from the controller and making the validation rules reusable.
+    -   **Thin Controllers:** The `FileUploadController`'s responsibility is limited to handling the HTTP request and response.
+    All complex logic is delegated to other classes.
+    -   **Service Layer:** The core business logic for processing a spreadsheet is extracted into a dedicated `SpreadsheetImportService`.
+    This makes the logic reusable, self-contained, and highly testable.
+    -   **Form Request Class:** Validation logic is encapsulated in the `StoreSpreadsheetRequest` class,
+    removing clutter from the controller and making the validation rules reusable.
 
 -   **Robust File Handling:** File size is validated at three distinct layers:
     1.  **Client-Side (JavaScript):** Provides instant user feedback.
