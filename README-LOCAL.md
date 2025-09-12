@@ -8,7 +8,7 @@ This is a simple web application built with the Laravel framework. The applicati
 To run this project locally, please confirm the PHP development environment that includes:
  -   PHP (version 8.2 or higher)
  -   Composer (the PHP package manager)
- -   The following PHP extensions: `pdo_sqlite`, `sqlite3`, `gd`, `bcmath`, and `zip`.
+ -   The following PHP extensions: `fileinfo` `pdo_sqlite`, `sqlite3`, `gd`, `bcmath`, and `zip`.
 
 **2. The Step-by-Step Command Sequence**
 Please follow these steps exactly to get the application running.
@@ -16,39 +16,65 @@ Please follow these steps exactly to get the application running.
 
 1. Clone the project and navigate into the `src` directory, as all commands must be run from there.
 ```bash
-    git clone https://github.com/m-a-islam/tiny-web-app.git
+git clone https://github.com/m-a-islam/tiny-web-app.git
 ```
 or
 ```bash
-    git clone git@github.com:m-a-islam/tiny-web-app.git
+git clone git@github.com:m-a-islam/tiny-web-app.git
 ```
 and then
 ```bash
-    cd tiny-web-app/src
+cd tiny-web-app/src
 ```
 
 2. Install all PHP dependencies using Composer.
 ```bash
-    composer install
+composer install
 ```
-3. Create the environment file by copying the example.
-```bash
-     cp .env.example .env
-```
+3. Create the environment file by copying the example.  
+   a. For Windows:  
+   Command Prompt:  
+    ```bash 
+    copy .env.example .env
+    ```
+   or PowerShell:  
+    ```bash
+   Copy-Item .env.example .env
+    ```
+   b. For macOS/Linux:
+    ```bash
+    cp .env.example .env
+    ```
 4. Generate the unique application key for Laravel.
 ```bash
-    php artisan key:generate
+php artisan key:generate
 ```
 5. Create the empty SQLite database file.
-```bash
-     touch database/database.sqlite
-```
+    a. For Windows:
+    Command Prompt:
+    ```bash 
+    type nul > database\database.sqlite
+    ```
+   or PowerShell:
+    ```bash
+   New-Item -Path database\database.sqlite -ItemType File
+    ```
+   
+    b. For macOS/Linux:
+    ```bash
+    touch database/database.sqlite
+    ```
 6. Run the database migrations to create the `sample` table.
 ```bash
-     php artisan migrate
+php artisan migrate
 ```
 7. Start Laravel's built-in development server.
 ```bash
-     php artisan serve
+php artisan serve
 ```
 8. The application will now be running at the URL provided in the terminal (usually **http://127.0.0.1:8000** or **http://127.0.01.8080**).
+
+9. To run the test suite, execute:
+```bash
+php artisan test
+```
