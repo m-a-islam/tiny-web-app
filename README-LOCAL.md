@@ -49,8 +49,8 @@ composer install
 ```bash
 php artisan key:generate
 ```
-5. Create the empty SQLite database file.
-    a. For Windows:
+5. Create the empty SQLite database file. If `database\database.sqlite` already exists, you can skip this step.  
+    a. For Windows:  
     Command Prompt:
     ```bash 
     type nul > database\database.sqlite
