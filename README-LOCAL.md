@@ -28,9 +28,9 @@ cd tiny-web-app/src
 ```
 
 2. Install all PHP dependencies using Composer.
-```bash
-composer install
-```
+    ```bash
+    composer install
+    ```
 3. Create the environment file by copying the example.  
    a. For Windows:  
    Command Prompt:  
@@ -46,9 +46,9 @@ composer install
     cp .env.example .env
     ```
 4. Generate the unique application key for Laravel.
-```bash
-php artisan key:generate
-```
+    ```bash
+    php artisan key:generate
+    ```
 5. Create the empty SQLite database file. If `database\database.sqlite` already exists, you can skip this step.  
     a. For Windows:  
     Command Prompt:

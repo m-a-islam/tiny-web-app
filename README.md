@@ -49,7 +49,7 @@ The test suite includes **Feature Tests** that simulate user interactions and **
 It mocks the `Excel` facade and uses an in-memory database to confirm that the service correctly parses data
 and creates database records, proving the logic is sound independent of any controller or HTTP request.
 
-## Architectural Decisions & Best Practices
+## Architectural Decisions
 
 This project was built with a focus on clean, modern software architecture.
 
