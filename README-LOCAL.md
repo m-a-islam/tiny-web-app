@@ -9,9 +9,11 @@ To run this project locally, please confirm the PHP development environment that
  -   PHP (version 8.2 or higher)
  -   Composer (the PHP package manager)
  -   The following PHP extensions: `fileinfo` `pdo_sqlite`, `sqlite3`, `gd`, `bcmath`, and `zip`.
+ -   For uploading large files, ensure your PHP configuration allows it by setting `upload_max_filesize` and `post_max_size` to at least `10M` in your `php.ini` file.
 
-**2. The Step-by-Step Command Sequence**
-Please follow these steps exactly to get the application running.
+**2. The Step-by-Step Command Sequence**  
+Please follow these steps exactly to get the application running.  
+
 **Setup Instructions:**
 
 1. Clone the project and navigate into the `src` directory, as all commands must be run from there.
